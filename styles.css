@@ -244,7 +244,7 @@ h3 { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 600; line-
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(ellipse 62% 58% at 50% 50%, rgba(255,255,255,.9) 0%, rgba(255,255,255,.8) 60%, rgba(255,255,255,.7) 100%);
+    radial-gradient(ellipse 62% 58% at 50% 50%, rgba(255,255,255,.84) 0%, rgba(255,255,255,.72) 60%, rgba(255,255,255,.6) 100%);
 }
 .hero-content { max-width: 860px; text-align: center; }
 .hero-content .eyebrow { margin-bottom: 1.75rem; }
@@ -260,7 +260,7 @@ h3 { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 600; line-
 
 @media (max-width: 700px) {
   .hero { min-height: 0; padding: 3.5rem 22px 4rem; }
-  .hero::before { background: rgba(255,255,255,.8); }
+  .hero::before { background: rgba(255,255,255,.74); }
   .hero-content .eyebrow { margin-bottom: 1.25rem; letter-spacing: .16em; }
   .hero h1 { margin-bottom: 1.25rem; }
   .hero-sub { margin-bottom: 2rem; }
@@ -433,14 +433,45 @@ h3 { font-family: var(--serif); font-size: var(--fs-h3); font-weight: 600; line-
 .service-media { aspect-ratio: 4 / 3.4; overflow: hidden; background: var(--sand); }
 .service-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .service:hover .service-media img { transform: scale(1.03); }
-.service-body { padding: clamp(1.6rem, 1.3rem + 1vw, 2.3rem); }
-.service-kicker { font-size: var(--fs-micro); font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--olive-deep); margin-bottom: .7rem; }
-.service-body h3 { margin-bottom: 1rem; }
-.service-body p:not(.service-kicker) { color: var(--text-soft); font-size: .97rem; }
+.cards-services { align-items: start; }
+.service-body { padding: clamp(1.4rem, 1.2rem + .8vw, 2rem); text-align: center; }
+.service-kicker {
+  font-size: .66rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--olive-deep);
+  margin-bottom: .6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* titolo sempre su 2 righe di altezza: tutte le box chiuse hanno la stessa dimensione */
+.service-body h3 { min-height: 2.4em; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.service-body p:not(.service-kicker) { color: var(--text-soft); font-size: .97rem; text-align: left; }
 .service-body p + p { margin-top: .8rem; }
 .service-body strong { color: var(--charcoal); font-weight: 600; }
 
-@media (max-width: 960px) { .cards-services { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; } }
+.service-toggle {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: none; border: 0; padding: .35rem 0; cursor: pointer;
+  font: inherit; font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--olive-deep);
+  border-bottom: 1px solid currentColor;
+}
+.service-toggle:hover { color: var(--charcoal); }
+.service-toggle-icon { position: relative; width: 10px; height: 10px; }
+.service-toggle-icon::before, .service-toggle-icon::after {
+  content: ""; position: absolute; top: 50%; left: 0; width: 10px; height: 1.5px; background: currentColor;
+  transform: translateY(-50%); transition: transform .35s var(--ease);
+}
+.service-toggle-icon::after { transform: translateY(-50%) rotate(90deg); }
+.service-toggle[aria-expanded="true"] .service-toggle-icon::after { transform: translateY(-50%) rotate(0deg); }
+
+.service-more { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .5s var(--ease); }
+.service-more-inner { overflow: hidden; padding-top: 1.2rem; }
+.js .service-more { grid-template-rows: 0fr; }
+.js .service-more .service-more-inner { padding-top: 0; transition: padding-top .5s var(--ease); }
+.js .service.is-open .service-more { grid-template-rows: 1fr; }
+.js .service.is-open .service-more-inner { padding-top: 1.2rem; }
+
+@media (max-width: 960px) {
+  .cards-services { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; gap: 1.25rem; }
+  .service-media { aspect-ratio: 16 / 10; }
+}
 
 /* ==========================================================
    COME FUNZIONA — percorso che si disegna con lo scroll

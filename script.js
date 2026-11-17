@@ -84,6 +84,20 @@
     links.forEach(function (a) { var s = document.querySelector(a.getAttribute('href')); if (s) spy.observe(s); });
   }
 
+  /* ---------- Servizi: Scopri di più ---------- */
+  document.querySelectorAll('.service-toggle').forEach(function (btn) {
+    var card = btn.closest('.service');
+    var hint = btn.querySelector('.sr-only');
+    var hintText = hint ? hint.textContent : '';
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open));
+      card.classList.toggle('is-open', open);
+      btn.firstChild.textContent = open ? 'Chiudi' : 'Scopri di più';
+      if (hint) hint.textContent = hintText;
+    });
+  });
+
   /* ---------- Form contatti ---------- */
   var form = document.getElementById('contact-form');
   if (form) {
